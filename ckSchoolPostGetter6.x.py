@@ -5,6 +5,7 @@ import pymysql
 import re
 import time
 
+#所有密碼相關已改大寫單字
 
 class PostInformationGetter():
     
@@ -103,12 +104,12 @@ class PostInformationGetter():
 
 class MysqlPostConnector():
     
-    mysqlCon = pymysql.connect('162.241.252.14', 
+    mysqlCon = pymysql.connect('IP', 
                            port = 3306, 
-                           user = 'toolsof6_YunXiuRZ', 
-                           passwd = 'Jerrykao1022', 
+                           user = 'USER', 
+                           passwd = 'PASSWORD', 
                            charset = 'utf8', 
-                           db = 'toolsof6_ckSchoolPost')
+                           db = 'DATABASE')
     cursor = mysqlCon.cursor()
 
     def checkPostExist(self, ID):
@@ -204,12 +205,12 @@ class MysqlPostConnector():
     
 #爬蟲起始
 #輸入公告ID
-mysqlCon = pymysql.connect('162.241.252.14', 
+mysqlCon = pymysql.connect('IP', 
                            port = 3306, 
-                           user = 'toolsof6_YunXiuRZ', 
-                           passwd = 'Jerrykao1022', 
+                           user = 'USER', 
+                           passwd = 'PASSWORD', 
                            charset = 'utf8', 
-                           db = 'toolsof6_ckSchoolPost')
+                           db = 'DATABASE')
 cursor = mysqlCon.cursor()
 mysqlExecution = """SELECT post_id
                 From ckSchoolPost"""
