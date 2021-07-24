@@ -3,3 +3,4 @@ flask
 pymysql
 requests
 bs4
+lxml
