@@ -1,0 +1,8 @@
+gunicorn
+flask
+pymysql
+re
+requests
+bs4
+sys
+time
