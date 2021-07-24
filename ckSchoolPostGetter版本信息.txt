@@ -5,3 +5,5 @@
 ckSchoolPostGetter5.0:修改資料庫ip位址、增加公告類別列
 
 ckSchoolPostGetter6.0:將收集公告資訊工作統一包裝成PostInformationGetter類，將與資料庫連線及查詢等工作包裝成MysqlPostConnector類，並新增更新公告資料功能，is_posed欄位為"2"，應該會是最後一個版本了，就算有新想法我也懶得改了XD
+
+ckSchoolPostGetter7.0:我還是來改了，改成導入模塊的方式簡化主程式程式碼

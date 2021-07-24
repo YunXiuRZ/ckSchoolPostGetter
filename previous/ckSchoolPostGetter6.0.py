@@ -214,7 +214,6 @@ posts = bs.find(attrs = {"class" : "List__ListContainer-sc-1li2krx-10 hGuVdB"})
 postList = posts.find_all(attrs = {"class" : "List__ItemLink-sc-1li2krx-8 fiVYKj"})
 idList = []
 for post in postList:
-    
     #取最後五位數組爲ID
     Id = re.search(r'[0-9]{5}$', post.get("href")).group()
     idList.append(Id)
@@ -225,3 +224,4 @@ for Id in idList:
     pig.setInformation()
     mpc = MysqlPostConnector()
     mpc.execute(pig)
+    

@@ -15,14 +15,14 @@ class PostInformationGetter():
         requestUrl = "https://www2.ck.tp.edu.tw/news/" + self.postID
         r = requests.get(requestUrl)
         r.encoding = "utf8"
-        self.bs = BeautifulSoup(r.text,'lxml')
+        self.bs = BeautifulSoup(r.text,'lxml').find(attrs={"class" : "Grid__Col-kjd5yz-1 jnORlA"})
         
     def setID(self, ID):
         self.postID = ID
         requestUrl = "https://www2.ck.tp.edu.tw/news/" + self.postID
         r = requests.get(requestUrl)
         r.encoding = "utf8"
-        self.bs = BeautifulSoup(r.text,'lxml')
+        self.bs = BeautifulSoup(r.text,'lxml').find(attrs={"class" : "Grid__Col-kjd5yz-1 jnORlA"})
         
     def setPostTitle(self):
         self.postTitle = self.bs.find("h4").text
@@ -77,8 +77,7 @@ class PostInformationGetter():
         categoryUrlList.reverse()
         categoryUrlList.pop()
         for categoryUrl in categoryUrlList:
-        
-            Id = re.search(r'category/[0-9]{1}$', categoryUrl.get("href")).group()
+            Id = re.search(r'category/\d*', categoryUrl.get("href")).group()
         
             categoryPostsUrl = "https://www2.ck.tp.edu.tw/news/" + Id
             r = requests.get(categoryPostsUrl)
