@@ -1,9 +1,9 @@
-# -*- coding: utf-8 -*
 from bs4 import BeautifulSoup
 import requests
 import pymysql
 import re
 import time
+
 
 
 class PostInformationGetter():
@@ -31,7 +31,7 @@ class PostInformationGetter():
     def setPostDate(self):
         date = self.bs.find(attrs = {"class" : "date"}).text
         dateList = date.split("/")
-        self.postDate = "%s-%s-%s" % (dateList[0], dateList[1], dateList[2])
+        self.postDate = "%s-%s-%s" % (dateList[0], dateList[1], dateList[2])   
 
     def setPostTime(self):
         localDate = time.strftime("%Y-%m-%d", time.localtime())
@@ -50,7 +50,6 @@ class PostInformationGetter():
         for line in lineList:
             self.postText +=line.text
             self.postText +="\n"
-        self.postText+=article.text
 
     def setAnnex(self):
         links = self.bs.find_all(attrs = {"class" : "Post__LinkWrapper-kr2236-3 iaPBqD"})   
@@ -99,7 +98,7 @@ class PostInformationGetter():
         self.setPostText()
         self.setAnnex()
         self.setCategory()
-
+        
 
 class MysqlPostConnector():
     
@@ -138,7 +137,6 @@ class MysqlPostConnector():
             return True
         if(datas[0][2] != pig.postText):
             return True
-        return False
     
     def execute(self, pig):
         if(self.checkPostExist(pig.postID)):
@@ -155,16 +153,14 @@ class MysqlPostConnector():
                             post_time = %s,
                             article = %s,
                             annex = %s,
-                            is_posted = %s
-                        WHERE post_id = %s
+                            is_posted
                         """
         self.cursor.execute(mysqlExecution, (pig.postTitle,
                                             pig.postDate,
                                             pig.postTime,
                                             pig.postText,
                                             pig.postAnnex,
-                                            2,
-                                            pig.postID)
+                                            2)
                                             )
         self.mysqlCon.commit()
         
@@ -185,7 +181,6 @@ class MysqlPostConnector():
                                 )
         VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
         """
-        
         self.cursor.execute(mysqlExecution, (pig.postID, 
                                             pig.postTitle,
                                             pig.postDate,
@@ -198,26 +193,8 @@ class MysqlPostConnector():
                                             pig.postCategory)
                                             )
         self.mysqlCon.commit()
-
-
-
-    
-#爬蟲起始
-#輸入公告ID
-mysqlCon = pymysql.connect('162.241.252.14', 
-                           port = 3306, 
-                           user = 'toolsof6_YunXiuRZ', 
-                           passwd = 'Jerrykao1022', 
-                           charset = 'utf8', 
-                           db = 'toolsof6_ckSchoolPost')
-cursor = mysqlCon.cursor()
-mysqlExecution = """SELECT post_id
-                From ckSchoolPost"""
-cursor.execute(mysqlExecution)
-IDList = cursor.fetchall()
-for ID in IDList:
-    Id = re.search(r'[0-9]{5}', str(ID)).group()
-    pig = PostInformationGetter(Id)
-    pig.setInformation()
-    mpc = MysqlPostConnector()
-    mpc.execute(pig)
+        
+pig = PostInformationGetter("13511")
+pig.setInformation()
+mpc = MysqlPostConnector()
+mpc.execute(pig)

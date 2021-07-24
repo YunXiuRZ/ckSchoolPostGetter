@@ -31,7 +31,7 @@ class PostInformationGetter():
     def setPostDate(self):
         date = self.bs.find(attrs = {"class" : "date"}).text
         dateList = date.split("/")
-        self.postDate = "%s-%s-%s" % (dateList[0], dateList[1], dateList[2])
+        self.postDate = "%s-%s-%s" % (dateList[0], dateList[1], dateList[2])   
 
     def setPostTime(self):
         localDate = time.strftime("%Y-%m-%d", time.localtime())
@@ -203,20 +203,24 @@ class MysqlPostConnector():
 
     
 #爬蟲起始
-#輸入公告ID
-mysqlCon = pymysql.connect('162.241.252.14', 
-                           port = 3306, 
-                           user = 'toolsof6_YunXiuRZ', 
-                           passwd = 'Jerrykao1022', 
-                           charset = 'utf8', 
-                           db = 'toolsof6_ckSchoolPost')
-cursor = mysqlCon.cursor()
-mysqlExecution = """SELECT post_id
-                From ckSchoolPost"""
-cursor.execute(mysqlExecution)
-IDList = cursor.fetchall()
-for ID in IDList:
-    Id = re.search(r'[0-9]{5}', str(ID)).group()
+#取得公告總覽原始碼
+postUrl = "https://www2.ck.tp.edu.tw/news?page=1"
+r = requests.get(postUrl)
+r.encoding = 'utf8'
+bs = BeautifulSoup(r.text, 'lxml')
+
+#取得9項公告ID
+posts = bs.find(attrs = {"class" : "List__ListContainer-sc-1li2krx-10 hGuVdB"})
+postList = posts.find_all(attrs = {"class" : "List__ItemLink-sc-1li2krx-8 fiVYKj"})
+idList = []
+for post in postList:
+    
+    #取最後五位數組爲ID
+    Id = re.search(r'[0-9]{5}$', post.get("href")).group()
+    idList.append(Id)
+
+#檢查該ID是否已存在在資料庫
+for Id in idList:
     pig = PostInformationGetter(Id)
     pig.setInformation()
     mpc = MysqlPostConnector()

@@ -1,20 +1,17 @@
 # -*- coding:utf-8 -*-
 import pymysql
 import requests
-import sys   
+import sys   #reload()之前必須要引入模組
 
-#上傳至雲主機設置文字編碼
 #reload(sys)
 #sys.setdefaultencoding('utf-8')
 
-#所有密碼相關已改大寫單字
-
-mysqlCon = pymysql.connect('IP', 
+mysqlCon = pymysql.connect('162.241.252.14', 
                            port = 3306, 
-                           user = 'USER', 
-                           passwd = 'PASSWORD', 
+                           user = 'toolsof6_YunXiuRZ', 
+                           passwd = 'Jerrykao1022', 
                            charset = 'utf8', 
-                           db = 'DATABASE')
+                           db = 'toolsof6_ckSchoolPost')
 cursor = mysqlCon.cursor()
 getNewPostsExecution = """SELECT post_id, 
                                 post_title
@@ -35,7 +32,7 @@ setPostIsPosedExecution = """UPDATE ckSchoolPost
                                 
 cursor.execute(getNewPostsExecution)
 newPostsInformation = cursor.fetchall()
-newPostToken = 'POSTTOKEN'
+newPostToken = 'tGGykhETyq81DyS5NP8yYi5gxUqcAWvvKaUmtsWbnE7'
 newPostHeaders = {
     "Authorization" : "Bearer " + newPostToken,
     "Content-Type" : "application/x-www-form-urlencoded"
@@ -57,7 +54,7 @@ for newPostInformation in newPostsInformation:
 cursor.execute(getUpdatePostsExecution)
 updatePostsInformation = cursor.fetchall()
 
-newUpdateToken = 'UPDATETOKEN'
+newUpdateToken = 'r2N2Ka6bzLS3fzPswHeodtG2q6eZ6Hh5MMx2rEYK2eE'
 newUpdateHeaders = {
     "Authorization" : "Bearer " + newUpdateToken,
     "Content-Type" : "application/x-www-form-urlencoded"
