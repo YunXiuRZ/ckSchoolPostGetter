@@ -8,12 +8,12 @@ app = Flask(__name__)
 @app.route('/get/')
 def get():
     get_post()
-    return 0
+    return 'get'
 
 @app.route('/send/')
 def send():
     send_messages()
-    return 0
+    return 'send'
 
 if __name__ == '__main__':
     app.debug = True
