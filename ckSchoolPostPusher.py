@@ -56,6 +56,7 @@ def send_message(execution, message, postHeaders):
         mysqlCon.commit()
         msg += postTitle
         msg += "\nhttps://www2.ck.tp.edu.tw/news/%s" % postID
+        print(postID)
         payload = {"message" : msg}
         notify = requests.post("https://notify-api.line.me/api/notify",
                                headers = postHeaders, params = payload)

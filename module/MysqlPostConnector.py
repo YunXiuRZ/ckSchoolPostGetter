@@ -42,12 +42,12 @@ class MysqlPostConnector():
     
     def execute(self, pig):
         if(self.checkPostExist(pig.postID)):
-            print("公告存在")
+            print("％s號公告存在" % pig.postID)
             if(self.checkIfPostUpdate(pig)):
-                print("公告更新")
+                print("更新％s號公告" % pig.postID)
                 self.updatePostData(pig)
         else:
-            print("公告不存在")
+            print("％s號公告不存在" % pig.postID)
             self.insertPostData(pig)
     
     def updatePostData(self, pig):
