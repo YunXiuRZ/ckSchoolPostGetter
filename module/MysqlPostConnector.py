@@ -58,7 +58,7 @@ class MysqlPostConnector():
                             post_time = %s,
                             article = %s,
                             annex = %s,
-                            is_posted = %d
+                            is_posted = %s
                         """
         self.cursor.execute(mysqlExecution, (pig.postTitle,
                                             pig.postDate,
