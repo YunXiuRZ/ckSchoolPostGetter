@@ -59,13 +59,15 @@ class MysqlPostConnector():
                             article = %s,
                             annex = %s,
                             is_posted = %s
+                        WHERE post_id = %s;
                         """
         self.cursor.execute(mysqlExecution, (pig.postTitle,
                                             pig.postDate,
                                             pig.postTime,
                                             pig.postText,
                                             pig.postAnnex,
-                                            2)
+                                            2,
+                                            pig.postID)
                                             )
         self.mysqlCon.commit()
         
