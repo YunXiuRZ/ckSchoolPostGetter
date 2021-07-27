@@ -87,17 +87,15 @@ def send_message(action):
 
     #取得要推送的用戶
     userTokens = select_SQL(executions['getUser'])
+    if len(PostsInformation) > 9:
+        notify("發送公告出錯，請聯繫維護者", generate_header(userTokens[0][1]))
+        return 1
 
     for userToken in userTokens:
         userName = userToken[0]
         postHeader = generate_header(userToken[1] if action == 'newPost' else userToken[2])
 
-        counter = 0 #偵錯計數器
         for PostInformation in PostsInformation:
-            counter+=1
-            if(counter >= 10):#發送超過九個公告，發生問題
-                notify("發送公告出錯，請聯繫維護者", postHeader)
-                return 1
         
             postID = PostInformation[0]
             postTitle = PostInformation[1]
