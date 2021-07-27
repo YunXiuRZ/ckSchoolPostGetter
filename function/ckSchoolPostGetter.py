@@ -33,7 +33,8 @@ def get_post():
         pig.setInformation()
         print("處理編號%s公告內容" % Id)
         mpc = MysqlPostConnector()
-        mpc.execute(pig)
+        if mpc.execute(pig) == 1:
+            return 0
    
 if __name__ == '__main__':
     get_post()

@@ -50,9 +50,13 @@ class MysqlPostConnector():
             if(self.checkIfPostUpdate(pig)):
                 print("更新%s號公告" % pig.postID)
                 self.updatePostData(pig)
+            else:
+                print("%s號公告未更新，停止處理公告" % pig.postID)
+                return 1
         else:
             print("%s號公告不存在" % pig.postID)
             self.insertPostData(pig)
+        return 0
     
     def updatePostData(self, pig):
         mysqlExecution ="""

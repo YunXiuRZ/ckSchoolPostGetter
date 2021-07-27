@@ -88,7 +88,7 @@ def send_message(action):
     #取得要推送的用戶
     userTokens = select_SQL(executions['getUser'])
     if len(PostsInformation) > 9:
-        notify("發送公告出錯，請聯繫維護者", generate_header(userTokens[0][1]))
+        notify("資料庫出錯，請聯繫維護者", generate_header(userTokens[0][1]))
         return 1
 
     for userToken in userTokens:
