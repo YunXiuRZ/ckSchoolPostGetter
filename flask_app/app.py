@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*
 from flask import Flask
+import sys
+sys.path.append('../function')
 from ckSchoolPostGetter import get_post
 from ckSchoolPostPusher import send_messages
 

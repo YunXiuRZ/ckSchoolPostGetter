@@ -1,13 +1,17 @@
 import pymysql
+import json
 from PostInformationGetter import PostInformationGetter
-       
+  
+sql_login = {}
+with open('SqlLogin.json', 'r') as f:
+    sql_login = json.load(f)
 
 class MysqlPostConnector():
     
     mysqlCon = pymysql.connect(host='162.241.252.14', 
                            port=3306, 
-                           user='toolsof6_YunXiuRZ', 
-                           passwd='Jerrykao1022', 
+                           user=sql_login['user'], 
+                           passwd=sql_login['passwd'], 
                            charset='utf8', 
                            db='toolsof6_ckSchoolPost')
     cursor = mysqlCon.cursor()
@@ -100,8 +104,9 @@ class MysqlPostConnector():
                                             pig.postCategory)
                                             )
         self.mysqlCon.commit()
-        
-"""pig = PostInformationGetter("13511")
-pig.setInformation()
-mpc = MysqlPostConnector()
-mpc.execute(pig)"""
+   
+if __name__ == '__main__':
+    pig = PostInformationGetter("13511")
+    pig.setInformation()
+    mpc = MysqlPostConnector()
+    mpc.execute(pig)

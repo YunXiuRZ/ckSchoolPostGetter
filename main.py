@@ -1,3 +1,5 @@
+import sys
+sys.path.append('function/')
 from ckSchoolPostGetter import get_post
 from ckSchoolPostPusher import send_messages
 
